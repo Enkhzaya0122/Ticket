@@ -1,5 +1,144 @@
 {% extends 'base/headerBase.html' %}
-
 {% block content %}
-<h1>ZAAAZAYZAYZAYA</h1>
+
+<style>
+    .zar-button{
+    width: 300px;
+    height: 350px;
+    color: black;
+
+    background: #FFFFFF;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border-color: #7BD959;
+}
+
+.zar-button:hover, .zar-button-active {
+    /* background-color: hsl(var(--nf,var(--n))/var(--tw-bg-opacity)); */
+    background-color: #b8b8b8;
+    border-color: #b8b8b8;
+}
+</style>
+
+<!-- Zaruud Carousel -->
+<div class="carousel w-full flex ">
+    <div id="slide1" class="carousel-item relative w-full h-96">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvP5xsFT_pguac8Q0q2MI-LD-RujtsSS1Trg&usqp=CAU" class="w-full" />
+      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+        <a href="#slide4" class="btn btn-circle">❮</a> 
+        <a href="#slide2" class="btn btn-circle">❯</a>
+      </div>
+    </div> 
+    <div id="slide2" class="carousel-item relative w-full h-96">
+      <img src="https://www.ticket.mn/files/concerts/images/chingunjaw_poster_%D2%AF%D0%BE_4XEkIzd.webp" class="w-full" />
+      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+        <a href="#slide1" class="btn btn-circle">❮</a> 
+        <a href="#slide3" class="btn btn-circle">❯</a>
+      </div>
+    </div> 
+    <div id="slide3" class="carousel-item relative w-full h-96">
+      <img src="/images/stock/photo-1414694762283-acccc27bca85.jpg" class="w-full" />
+      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+        <a href="#slide2" class="btn btn-circle">❮</a> 
+        <a href="#slide4" class="btn btn-circle">❯</a>
+      </div>
+    </div> 
+    <div id="slide4" class="carousel-item relative w-full h-96">
+      <img src="/images/stock/photo-1665553365602-b2fb8e5d1707.jpg" class="w-full" />
+      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+        <a href="#slide3" class="btn btn-circle">❮</a> 
+        <a href="#slide1" class="btn btn-circle">❯</a>
+      </div>
+    </div>
+  </div>
+
+  
+<!-- <div id="gallery" class="relative w-full" data-carousel="slide">
+
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+      
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvP5xsFT_pguac8Q0q2MI-LD-RujtsSS1Trg&usqp=CAU" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+        </div>
+     
+        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvP5xsFT_pguac8Q0q2MI-LD-RujtsSS1Trg&usqp=CAU" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+        </div>
+     
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+        </div>
+   
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+        </div>
+       
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+        </div>
+    </div>
+   
+    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            <span class="sr-only">Previous</span>
+        </span>
+    </button>
+    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span class="sr-only">Next</span>
+        </span>
+    </button>
+</div> -->
+
+
+
+
+  <!-- Category -->
+  
+
+    <div class=" mx-auto max-w-screen-xl p-5">
+            <button class="btn btn-outline m-5">Бүгд</button>
+            <button class="btn btn-outline m-5">Бүжиг</button>
+            <button class="btn btn-outline m-5">Жүжиг</button>
+            <button class="btn btn-outline m-5">Концерт</button>
+            <button class="btn btn-outline m-5">Дуурь</button>
+            <button class="btn btn-outline m-5">Балет</button>
+    </div>
+
+  
+  <!-- Shine zaruud button -->
+  <div class="m-10">
+    <div>
+        <p class="font-bold text-2xl my-8 ">Шинэ зарууд:</p>
+    </div>
+    <div class="ml-5 mb-5">
+        <!-- <a href="{% url 'detail'%}" class="btn zar-button ml-10 mb-10 text-left" >
+                  <img class="object-cover h-48 w-96 rounded-lg" src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=1200" />
+            <div>
+                <p>Нэр:</p><br>
+                <p>Хаана:</p><br>
+                <p>Хэзээ:</p>
+            </div>
+        </a> -->
+
+        <a href="{% url 'detail'%}" class="card w-96 bg-base-100 shadow-xl ml-5 mb-5">
+            <figure><img src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=1200" alt="Shoes" /></figure>
+            <div class="card-body">
+              <h2 class="card-title">Жүжиг</h2>
+              <p>Нэр:</p>
+              <p>Хаана:</p>
+              <p>Хэзээ:</p>
+            </div>
+        </a>
+
+        
+
+        
+
+
+    
+
+        
 {% endblock %}

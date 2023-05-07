@@ -3,14 +3,14 @@
 
 <style>
     .zar-button{
-    width: 300px;
-    height: 350px;
+    width: 400px;
+    height: 450px;
     color: black;
 
     background: #FFFFFF;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    border-color: #7BD959;
+    border-color: white;
 }
 
 .zar-button:hover, .zar-button-active {
@@ -97,41 +97,37 @@
 
   <!-- Category -->
   
-
-    <div class=" mx-auto max-w-screen-xl p-5">
-            <button class="btn btn-outline m-5">Бүгд</button>
-            <button class="btn btn-outline m-5">Бүжиг</button>
-            <button class="btn btn-outline m-5">Жүжиг</button>
-            <button class="btn btn-outline m-5">Концерт</button>
-            <button class="btn btn-outline m-5">Дуурь</button>
-            <button class="btn btn-outline m-5">Балет</button>
+<form method="POST">
+    {% csrf_token %}
+    <div class=" mx-auto py-4  min-w-full bg-base-100 flex flex-row  items-center">
+            <button class="btn btn-outline m-5" name="All" value="All">Бүгд</button>
+            <button class="btn btn-outline m-5" name="bujig" value="bujig" >Бүжиг</button>
+            <button class="btn btn-outline m-5" name="jujig" value="jujig" >Жүжиг</button>
+            <button class="btn btn-outline m-5" name="concert" value="concert" >Концерт</button>
+            <button class="btn btn-outline m-5" name="duuri" value="duuri" >Дуурь</button>
+            <button class="btn btn-outline m-5" name="ballet" value="ballet" >Балет</button>
+            <button class="btn btn-outline m-5" name="lecture" value="lecture" >lecture</button>
     </div>
+</form>
 
   
   <!-- Shine zaruud button -->
   <div class="m-10">
     <div>
-        <p class="font-bold text-2xl my-8 ">Шинэ зарууд:</p>
+        <p class="font-bold text-white text-2xl my-8 ">Шинэ зарууд:</p>
     </div>
     <div class="ml-5 mb-5">
-        <!-- <a href="{% url 'detail'%}" class="btn zar-button ml-10 mb-10 text-left" >
-                  <img class="object-cover h-48 w-96 rounded-lg" src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=1200" />
-            <div>
-                <p>Нэр:</p><br>
-                <p>Хаана:</p><br>
-                <p>Хэзээ:</p>
-            </div>
-        </a> -->
-
-        <a href="{% url 'detail'%}" class="card w-96 bg-base-100 shadow-xl ml-5 mb-5">
-            <figure><img src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=1200" alt="Shoes" /></figure>
-            <div class="card-body">
-              <h2 class="card-title">Жүжиг</h2>
-              <p>Нэр:</p>
-              <p>Хаана:</p>
-              <p>Хэзээ:</p>
-            </div>
+        {% for zar in data %}
+        <a href="{% url 'detail' zar.tnum %}" class="btn zar-button ml-10 mb-10 text-left" >
+                  <img class="m-0" src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=1200" />
+                  <div class="card-body">
+                    <h2 class="card-title">{{zar.catname}}</h2>
+                    <p>Нэр: {{zar.title}}</p>
+                    <p>Хаана: {{zar.location}}</p>
+                    <p>Хэзээ: {{zar.date}}</p>
+                  </div>
         </a>
+        {% endfor %}
 
         
 

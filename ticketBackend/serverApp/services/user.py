@@ -16,6 +16,7 @@ def getUsers(request):
         resp = sendResponse(e,jsons["action"])
     finally:
         disconnectDB(con)
+    print(resp)
     return resp
     # getUsers
 
@@ -50,4 +51,5 @@ def mainFunction(reqeust):
                 resp = getUserInfo(reqeust)
         except Exception as e:
             resp = str(e)
+    
     return HttpResponse(resp, content_type="application/json")

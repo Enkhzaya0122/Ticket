@@ -1,18 +1,60 @@
 {% extends 'base/headerBase.html' %}
 {% block content %}
-
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
 <form method="POST" class="bg-purple-400">
     {% csrf_token %}
-    <div class=" mx-auto py-4  min-w-full bg-base-100 flex flex-row  items-center">
-            <button class="btn btn-outline m-5" name="All" value="All">Бүгд</button>
-            <button class="btn btn-outline m-5" name="bujig" value="bujig" >Бүжиг</button>
-            <button class="btn btn-outline m-5" name="jujig" value="jujig" >Жүжиг</button>
-            <button class="btn btn-outline m-5" name="concert" value="concert" >Концерт</button>
-            <button class="btn btn-outline m-5" name="duuri" value="duuri" >Дуурь</button>
-            <button class="btn btn-outline m-5" name="ballet" value="ballet" >Балет</button>
-            <button class="btn btn-outline m-5" name="lecture" value="lecture" >lecture</button>
+    <div class=" mx-auto py-4  min-w-full  flex flex-row  items-center">
+            <button class="btn btn-outline m-5 bg-base-100" name="All" value="All" style="margin-left: 23%;">Бүгд</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="bujig" value="bujig" >Бүжиг</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="jujig" value="jujig" >Жүжиг</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="concert" value="concert" >Концерт</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="duuri" value="duuri" >Дуурь</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="ballet" value="ballet" >Балет</button>
+            <button class="btn btn-outline m-5 bg-base-100" name="lecture" value="lecture" style="margin-right: 25%" >lecture</button>
     </div>
 </form>
+<div class=" mx-auto py-4  min-w-full  flex flex-row  items-center">
+    <div style="
+    width: 60%; 
+    height: 100%; 
+    background-color: rgb(255, 255, 255); 
+    margin-left: 20% ; 
+    height: 100%;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 5px #888888;
+    border-radius: var(--rounded-btn,.5rem);">
+        <table>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>sd</td>
+                <td>ds</td>
+            </tr>
+        </table>     
+    </div>
+</div>
+<div class="col-xs-1" align="center"><button class="btn m-5 bg-purple-500" style="color: white; box-shadow: 2px 2px #888888; border: purple;" name="" value="" >Нэвтрэх</button></div>
+   
+
 
 
 {% endblock %}

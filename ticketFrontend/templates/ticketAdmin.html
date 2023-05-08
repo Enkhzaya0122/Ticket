@@ -1,6 +1,18 @@
 {% extends 'base/headerBase.html' %}
 {% block content %}
 
+<form method="POST" class="bg-purple-400">
+    {% csrf_token %}
+    <div class=" mx-auto py-4  min-w-full bg-base-100 flex flex-row  items-center">
+            <button class="btn btn-outline m-5" name="All" value="All">Бүгд</button>
+            <button class="btn btn-outline m-5" name="bujig" value="bujig" >Бүжиг</button>
+            <button class="btn btn-outline m-5" name="jujig" value="jujig" >Жүжиг</button>
+            <button class="btn btn-outline m-5" name="concert" value="concert" >Концерт</button>
+            <button class="btn btn-outline m-5" name="duuri" value="duuri" >Дуурь</button>
+            <button class="btn btn-outline m-5" name="ballet" value="ballet" >Балет</button>
+            <button class="btn btn-outline m-5" name="lecture" value="lecture" >lecture</button>
+    </div>
+</form>
 
 
 {% endblock %}

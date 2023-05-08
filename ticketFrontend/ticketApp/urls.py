@@ -8,5 +8,6 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('headerBase/', views.headerBase, name="headerBase"),
     path('detail/<int:id>', views.detail, name="detail"),
+    path('ticketAdmin/', views.ticketAdmin, name="ticketAdmin"),
     
 ]

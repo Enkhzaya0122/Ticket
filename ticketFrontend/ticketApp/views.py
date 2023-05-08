@@ -85,3 +85,6 @@ def detail(request,id):
 
 def register(request):
     return render(request, "register.html")
+
+def ticketAdmin(request):
+    return render(request, "ticketAdmin.html")

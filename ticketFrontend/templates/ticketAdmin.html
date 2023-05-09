@@ -42,17 +42,33 @@
     border-radius: var(--rounded-btn,.5rem);">
         <table>
             <tr>
-                <td>1</td>
-                <td>2</td>
+                <td>№</td>
+                <td>Гарчиг</td>
+                <td>Төрөл</td>
+                <td>
+                
+                </td>
+                <td>
+                    
+                </td>
             </tr>
+            {% for info in data %}
             <tr>
-                <td>sd</td>
-                <td>ds</td>
+                <td>{{info.tnum}}</td>
+                <td>{{info.title}}</td>
+                <td>{{info.catname}}</td>
+                <td>
+                    <a href="{% url 'registerTicket' info.tnum %}" class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">edit</a>
+                </td>
+                <td>
+                    <a href="{% url 'delete' info.tnum %}" class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">delete</a>
+                </td>
             </tr>
+            {% endfor %}
         </table>     
     </div>
 </div>
-<div class="col-xs-1" align="center"><button class="btn m-5 bg-purple-500" style="color: white; box-shadow: 2px 2px #888888; border: purple;" name="" value="" >Нэвтрэх</button></div>
+<div class="col-xs-1" align="center"><a href="{% url 'registerTicket' 0 %}" class="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">add ticket</a></div>
    
 
 

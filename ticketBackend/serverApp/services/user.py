@@ -38,6 +38,28 @@ def getUserInfo(request):
     return resp
     # getUserInfo
 
+def login(request):
+    jsons = json.loads(request.body)
+    try:
+        email = jsons['email']
+        password = jsons['password']
+        con = connectDB()
+        cursor = con.cursor()
+        cursor.execute(f"SELECT username FROM t_ticketuser WHERE email = '{email}' AND password = '{password}' ")
+        if cursor.rowcount > 0:
+            columns = cursor.description
+            respRow = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            resp = sendResponse(respRow,jsons["action"])
+        else:
+            resp = sendResponse('user not found',jsons["action"])
+        cursor.close()
+    except Exception as e:
+        resp = sendResponse(e,jsons["action"])
+    finally:
+        disconnectDB(con)
+    return resp
+    # getUsers
+
 def mainFunction(reqeust):
     json = checkreg(reqeust)
     if json == False:
@@ -49,6 +71,8 @@ def mainFunction(reqeust):
                 resp = getUsers(reqeust)
             if json['action'] == 'getUserInfo':
                 resp = getUserInfo(reqeust)
+            if json['action'] == 'login':
+                resp = login(reqeust)
         except Exception as e:
             resp = str(e)
     

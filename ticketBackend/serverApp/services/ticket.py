@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from .utils import *
+from rest_framework.decorators import api_view
 
 
 def getTickets(request):
@@ -43,6 +44,58 @@ def getTicketInfo(request):
     return resp
     # getUserInfo
 
+def registerTicket(request):
+    jsons = json.loads(request.body)
+    title = jsons['title']
+    desc = jsons['desc']
+    date = jsons['date']
+    location = jsons['location']
+    price = jsons['price']
+    catname = jsons['catname']
+    tnum = jsons['tnum']
+    print(catname)
+    try:
+        con = connectDB()
+        cursor = con.cursor()
+        cursor.execute(f"SELECT catnum from t_ticketcategory WHERE LOWER(catname) = LOWER('{catname}')")
+        catnum = cursor.fetchone()
+        if tnum != 0:
+            cursor.execute("UPDATE public.t_ticket "
+                            f"SET location='{location}', price='{price}', title='{title}', " + '"desc"' + f"='{desc}', date='{date}', catnum='{catnum[0]}' "
+                            f"WHERE tnum = '{tnum}';")
+        else:
+            cursor.execute('INSERT INTO t_ticket('
+	                    'tnum, location, price, title, "desc", date, catnum) ' 
+	                    f"VALUES (DEFAULT, '{location}', '{price}', '{title}', '{desc}', '{date}', '{catnum[0]}');")
+        con.commit()
+        resp = sendResponse('success',jsons["action"])
+        cursor.close()
+    except Exception as e:
+        resp = sendResponse(e,jsons["action"])
+    finally:
+        disconnectDB(con)
+    return resp
+    # registerTicket
+
+def deleteTicket(request):
+    jsons = json.loads(request.body)
+    tnum = jsons['tnum']
+    try:
+        con = connectDB()
+        cursor = con.cursor()
+        print(f"DELETE FROM t_ticket WHERE tnum = '{tnum}';")
+        cursor.execute(f"DELETE FROM t_ticket WHERE tnum = '{tnum}';")
+        con.commit()
+        resp = sendResponse('success',jsons["action"])
+        cursor.close()
+    except Exception as e:
+        resp = sendResponse(e,jsons["action"])
+    finally:
+        disconnectDB(con)
+    return resp
+    # registerTicket
+
+@api_view(['POST','GET'])
 def mainFunction(reqeust):
     json = checkreg(reqeust)
     if json == False:
@@ -54,6 +107,10 @@ def mainFunction(reqeust):
                 resp = getTickets(reqeust)
             if json['action'] == 'getTicketInfo':
                 resp = getTicketInfo(reqeust)
+            if json['action'] == 'registerTicket':
+                resp = registerTicket(reqeust)
+            if json['action'] == 'deleteTicket':
+                resp = deleteTicket(reqeust)
         except Exception as e:
             resp = str(e)
     print(resp)

@@ -1,0 +1,49 @@
+{% extends 'base/headerBase.html' %}
+{% block content %}
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+
+<div class=" mx-auto py-10  min-w-full  flex flex-row  items-center ">
+    <div style="
+    width: 60%; 
+    height: 100%; 
+    background-color: rgb(255, 255, 255); 
+    margin-left: 20% ; 
+    height: 100%;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 5px #888888;
+    border-radius: var(--rounded-btn,.5rem);">
+
+<div class=" mx-auto py-4  min-w-full  flex flex-row  items-center">
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Та итгэлтэй байна уу </label>
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-outline m-5 bg-purple-600">Тийм</button>
+    </form>
+        <a href="{% url 'ticketAdmin' %}" class="btn btn-outline m-5 bg-purple-600" >Үгүй</a>
+    
+</div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

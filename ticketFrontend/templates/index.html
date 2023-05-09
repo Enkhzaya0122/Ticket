@@ -100,7 +100,7 @@
 <form method="POST">
     {% csrf_token %}
     <div class=" mx-auto py-4  min-w-full bg-base-100 flex flex-row  items-center">
-            <button class="btn btn-outline m-5" name="All" value="All">Бүгд</button>
+            <button class="btn btn-outline m-5" href="{% url 'index' %}" name="All" value="All">Бүгд</button>
             <button class="btn btn-outline m-5" name="bujig" value="bujig" >Бүжиг</button>
             <button class="btn btn-outline m-5" name="jujig" value="jujig" >Жүжиг</button>
             <button class="btn btn-outline m-5" name="concert" value="concert" >Концерт</button>

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 import requests
 from django.contrib.auth import logout
 import json
+import base64
 
 def headerBase(request):
     return render(request, "base/headerBase.html")
@@ -63,7 +64,6 @@ def index(request):
                 'email' : request.session.get('email'),
                 'login' : 1
             }
-        print(context.keys())
         return render(request, "index.html",context=context)
     else:
         return redirect('login',context)
@@ -103,9 +103,7 @@ def login(request):
                 'data' : resp['data'],
                 'login' : 2
             }
-        print(context)
         return render(request, "login.html",context=context)
-
 
 def detail(request,id):
     context = {}
@@ -123,7 +121,7 @@ def detail(request,id):
             resp['data']
         }
     if request.method == 'POST':
-        print('post')
+        pass
     return render(request, "detail.html",context=context)
 
 def register(request):
@@ -156,6 +154,9 @@ def registerTicket(request,id):
                 'cate' : cate['data']
             }
         if request.method == 'POST':
+            uploaded_image = request.FILES.get("picture")
+            image_data = uploaded_image.read()
+            base64_encoded_data = base64.b64encode(image_data).decode("utf-8")
             title = request.POST.get('title')
             desc = request.POST.get('desc')
             date = request.POST.get('date')
@@ -170,14 +171,16 @@ def registerTicket(request,id):
                 "location" : location,
                 "price" : price,
                 "catname" : catname,
-                "tnum" : id
+                "tnum" : id,
+                "picture" : base64_encoded_data
             }
             response = requests.post('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),
                                     headers={'Content-Type' : 'application/json'})
             resp = json.loads(response.text)
             context = {
-                'data' : resp['data']
+                'data' : resp['data'],
+                'image' : base64_encoded_data
             }
             if resp['data'] == 'success':
                 return redirect('ticketAdmin')
@@ -241,7 +244,7 @@ def ticketAdmin(request):
                 'data' : 
                 resp['data']
             }
-        print(resp)
+
         return render(request, "ticketAdmin.html",context=context)
     else:
         return redirect('login')

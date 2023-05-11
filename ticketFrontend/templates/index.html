@@ -122,7 +122,7 @@
     <div class="ml-5 mb-5">
         {% for zar in data %}
         <a href="{% url 'detail' zar.tnum %}" class="btn zar-button ml-10 mb-10 text-left" >
-                  <img class="m-0" src="https://cdn.eventplanner.net/imgs/xl10593_hoe-bepaal-je-de-ticketprijs-voor-je-evenement.jpg" />
+                  <img class="m-0" src='data:image/jpeg;base64,{{zar.picture}}' />
                   <div class="card-body">
                     <h2 class="card-title">{{zar.catname}}</h2>
                     <p>Нэр: {{zar.title}}</p>

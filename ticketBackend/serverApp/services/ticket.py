@@ -12,7 +12,7 @@ def getTickets(request):
     try:
         con = connectDB()
         cursor = con.cursor()
-        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname", "date" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
+        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname", "date", "picture" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
         columns = cursor.description
         respRow = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
         resp = sendResponse(respRow,jsons["action"])
@@ -51,6 +51,7 @@ def registerTicket(request):
     price = jsons['price']
     catname = jsons['catname']
     tnum = jsons['tnum']
+    picture = jsons['picture']
     try:
         con = connectDB()
         cursor = con.cursor()
@@ -58,12 +59,12 @@ def registerTicket(request):
         catnum = cursor.fetchone()
         if tnum != 0:
             cursor.execute("UPDATE public.t_ticket "
-                            f"SET location='{location}', price='{price}', title='{title}', " + '"desc"' + f"='{desc}', date='{date}', catnum='{catnum[0]}' "
+                            f"SET location='{location}', price='{price}', title='{title}', " + '"desc"' + f"='{desc}', date='{date}', catnum='{catnum[0]}', picture='{picture}' "
                             f"WHERE tnum = '{tnum}';")
         else:
             cursor.execute('INSERT INTO t_ticket('
-	                    'tnum, location, price, title, "desc", date, catnum) ' 
-	                    f"VALUES (DEFAULT, '{location}', '{price}', '{title}', '{desc}', '{date}', '{catnum[0]}');")
+	                    'tnum, location, price, title, "desc", date, catnum,picture) ' 
+	                    f"VALUES (DEFAULT, '{location}', '{price}', '{title}', '{desc}', '{date}', '{catnum[0]}','{picture}');")
         con.commit()
         resp = sendResponse('success',jsons["action"])
         cursor.close()

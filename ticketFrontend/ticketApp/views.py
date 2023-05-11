@@ -8,9 +8,7 @@ def headerBase(request):
 
 def index(request):
     if request.session.get('email'):
-        context = {}
         if request.method == 'GET':
-
             type = 'All'
             if request.GET.get('All'):
                 type = "All"
@@ -34,7 +32,9 @@ def index(request):
             resp = json.loads(response.text)
             context = {
                 'data' : 
-                resp['data']
+                resp['data'],
+                'email' : request.session.get('email'),
+                'login' : 1
             }
         if request.method == 'POST':
             type = 'All'
@@ -59,22 +59,28 @@ def index(request):
                                     headers={'Content-Type' : 'application/json'})
             resp = json.loads(response.text)
             context = {
-                'data' : 
-                resp['data']
+                'data' : resp['data'],
+                'email' : request.session.get('email'),
+                'login' : 1
             }
+        print(context.keys())
         return render(request, "index.html",context=context)
     else:
-        return redirect('login')
+        return redirect('login',context)
 
 def login(request):
     if request.session.get('email'):
         return redirect('index')
     else:
+        
         if request.method == "GET":
             email = request.GET.get('email')
             password = request.GET.get('password')
             if email == None and password == None:
-                return render(request, 'login.html')
+                context = {
+                'login' : 2
+            }
+                return render(request, 'login.html',context=context)
             requestJSON = {
                 "action" : "login",
                 "email" : email,
@@ -86,7 +92,7 @@ def login(request):
                                     headers={'Content-Type' : 'application/json'})
             resp = json.loads(response.text)
             
-            if resp['data']!= 'user not found':
+            if resp['data'] != 'user not found':
                 # Create a session for the user
                 request.session['email'] = email
                 request.session['password'] = password
@@ -94,9 +100,10 @@ def login(request):
                 return redirect('index')
             
             context = {
-                'data' : resp['data']
+                'data' : resp['data'],
+                'login' : 2
             }
-            
+        print(context)
         return render(request, "login.html",context=context)
 
 
@@ -120,7 +127,10 @@ def detail(request,id):
     return render(request, "detail.html",context=context)
 
 def register(request):
-    return render(request, "register.html")
+    context = {
+        'login' : 2
+    }
+    return render(request, "register.html",context=context)
 
 def registerTicket(request,id):
     if request.session.get('email'):
@@ -134,8 +144,16 @@ def registerTicket(request,id):
                                     data=json.dumps(requestJSON),
                                     headers={'Content-Type' : 'application/json'})
             resp = json.loads(response.text)
+            requestJSON = {
+                "action" : "lookupCategory"
+            }
+            response = requests.post('http://127.0.0.1:8080/ticket/',
+                                    data=json.dumps(requestJSON),
+                                    headers={'Content-Type' : 'application/json'})
+            cate = json.loads(response.text)
             context = {
-                'data' : resp['data']
+                'data' : resp['data'],
+                'cate' : cate['data']
             }
         if request.method == 'POST':
             title = request.POST.get('title')
@@ -162,7 +180,7 @@ def registerTicket(request,id):
                 'data' : resp['data']
             }
             if resp['data'] == 'success':
-                return redirect('index')
+                return redirect('ticketAdmin')
         return render(request, "registerTicket.html", context=context)
     else:
         return redirect('login')
@@ -262,7 +280,7 @@ def delete(request,id):
 def log_out(request):
     del request.session['email']
     logout(request)
+
     return redirect('login')
 
-def menu(request):
-    return render(request, "jijig/menu.html")
+

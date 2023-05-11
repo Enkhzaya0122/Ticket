@@ -12,5 +12,4 @@ urlpatterns = [
     path('registerTicket/<int:id>', views.registerTicket, name="registerTicket"),
     path('delete/<int:id>', views.delete, name="delete"),
     path('log_out/', views.log_out, name='log_out'),
-    path('menu/', views.menu, name='menu'),
 ]

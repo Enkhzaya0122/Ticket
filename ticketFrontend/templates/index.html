@@ -102,8 +102,7 @@
   
 <form method="POST">
     {% csrf_token %}
-    {{email}}
-    <div class="mx-auto py-4  min-w-full bg-base-100 px-96">
+    <div class="mx-auto py-4  min-w-full bg-base-100 px-[500px]">
             <button class="btn btn-outline m-5" href="{% url 'index' %}" name="All" value="All">Бүгд</button>
             <button class="btn btn-outline m-5" name="bujig" value="bujig" >Бүжиг</button>
             <button class="btn btn-outline m-5" name="jujig" value="jujig" >Жүжиг</button>
@@ -133,12 +132,4 @@
         </a>
         {% endfor %}
 
-        
-
-        
-
-
-    
-
-        
 {% endblock %}

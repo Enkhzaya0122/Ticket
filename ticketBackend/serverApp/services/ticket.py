@@ -12,8 +12,7 @@ def getTickets(request):
     try:
         con = connectDB()
         cursor = con.cursor()
-        print(f'SELECT "tnum", "desc","location","title","price", "catname" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
-        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
+        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname", "date" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
         columns = cursor.description
         respRow = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
         resp = sendResponse(respRow,jsons["action"])
@@ -22,7 +21,6 @@ def getTickets(request):
         resp = sendResponse(e,jsons["action"])
     finally:
         disconnectDB(con)
-    print(resp)
     return resp
     # getUsers
 
@@ -53,7 +51,6 @@ def registerTicket(request):
     price = jsons['price']
     catname = jsons['catname']
     tnum = jsons['tnum']
-    print(catname)
     try:
         con = connectDB()
         cursor = con.cursor()
@@ -95,6 +92,23 @@ def deleteTicket(request):
     return resp
     # registerTicket
 
+def lookupCategory(request):
+    jsons = json.loads(request.body)
+    try:
+        con = connectDB()
+        cursor = con.cursor()
+        cursor.execute(f"SELECT catname FROM t_ticketcategory;")
+        columns = cursor.description
+        respRow = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        resp = sendResponse(respRow,jsons["action"])
+        cursor.close()
+    except Exception as e:
+        resp = sendResponse(e,jsons["action"])
+    finally:
+        disconnectDB(con)
+    return resp
+    # registerTicket
+
 @api_view(['POST','GET'])
 def mainFunction(reqeust):
     json = checkreg(reqeust)
@@ -111,6 +125,8 @@ def mainFunction(reqeust):
                 resp = registerTicket(reqeust)
             if json['action'] == 'deleteTicket':
                 resp = deleteTicket(reqeust)
+            if json['action'] == 'lookupCategory':
+                resp = lookupCategory(reqeust)
         except Exception as e:
             resp = str(e)
     print(resp)

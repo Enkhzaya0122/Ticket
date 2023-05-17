@@ -25,7 +25,8 @@ def index(request):
                 type = "ballet"
             requestJSON = {
                 "action" : "getTickets",
-                "type" : f"{type}"
+                "type" : f"{type}",
+                "search" : ""
             }
             response = requests.get('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),
@@ -53,7 +54,8 @@ def index(request):
                 type = "ballet"
             requestJSON = {
                 "action" : "getTickets",
-                "type" : f"{type}"
+                "type" : f"{type}",
+                "search" : ""
             }
             response = requests.get('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),
@@ -155,14 +157,16 @@ def registerTicket(request,id):
             }
         if request.method == 'POST':
             uploaded_image = request.FILES.get("picture")
+            print(request.FILES.get('picture'))
             image_data = uploaded_image.read()
             base64_encoded_data = base64.b64encode(image_data).decode("utf-8")
+            print(base64_encoded_data)
             title = request.POST.get('title')
             desc = request.POST.get('desc')
             date = request.POST.get('date')
             location = request.POST.get('location')
             price = request.POST.get('price')
-            catname = request.POST['catname']
+            catname = request.POST.get('catname')
             requestJSON = {
                 "action" : "registerTicket",
                 "title" : title,
@@ -177,6 +181,7 @@ def registerTicket(request,id):
             response = requests.post('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),
                                     headers={'Content-Type' : 'application/json'})
+            
             resp = json.loads(response.text)
             context = {
                 'data' : resp['data'],
@@ -192,7 +197,6 @@ def ticketAdmin(request):
     if request.session.get('email'):
         context = {}
         if request.method == 'GET':
-            
             type = 'All'
             if request.GET.get('All'):
                 type = "All"
@@ -208,7 +212,8 @@ def ticketAdmin(request):
                 type = "ballet"
             requestJSON = {
                 "action" : "getTickets",
-                "type" : f"{type}"
+                "type" : f"{type}",
+                "search" : ""
             }
             response = requests.get('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),
@@ -219,6 +224,10 @@ def ticketAdmin(request):
                 resp['data']
             }
         if request.method == 'POST':
+            searchTerm = ""
+            if request.POST.get("search"):
+                searchTerm = request.POST.get('search')
+            
             type = 'All'
             if request.POST.get('All'):
                 type = "All"
@@ -234,7 +243,8 @@ def ticketAdmin(request):
                 type = "ballet"
             requestJSON = {
                 "action" : "getTickets",
-                "type" : f"{type}"
+                "type" : f"{type}",
+                "search" : f"{searchTerm}"
             }
             response = requests.get('http://127.0.0.1:8080/ticket/',
                                     data=json.dumps(requestJSON),

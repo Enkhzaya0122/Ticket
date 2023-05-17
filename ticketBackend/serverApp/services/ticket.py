@@ -6,13 +6,22 @@ from rest_framework.decorators import api_view
 def getTickets(request):
     jsons = json.loads(request.body)
     type = jsons['type']
+    print("world")
+    search = jsons['search']
+    print('Hello')
+    searchQ = ''
+    where = ""
+    if search != '':
+        searchQ = f" LOWER(title) LIKE '%LOWER({search})%'"
     dummy = ""
     if type != "All":
-        dummy = 'WHERE LOWER(t_ticketcategory.catname) = LOWER(' + f"'{type}'" + ')'
+        dummy = ' LOWER(t_ticketcategory.catname) = LOWER(' + f"'{type}'" + ')'
+    if type != "All" and search != "":
+        where = ' WHERE '
     try:
         con = connectDB()
         cursor = con.cursor()
-        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname", "date", "picture" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum '+ dummy)
+        cursor.execute(f'SELECT "tnum", "desc","location","title","price", "catname", "date", "picture" FROM t_ticket INNER jOIN t_ticketcategory ON t_ticket.catnum = t_ticketcategory.catnum ' + where + dummy + searchQ)
         columns = cursor.description
         respRow = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
         resp = sendResponse(respRow,jsons["action"])
@@ -72,6 +81,7 @@ def registerTicket(request):
         resp = sendResponse(e,jsons["action"])
     finally:
         disconnectDB(con)
+    
     return resp
     # registerTicket
 
@@ -81,7 +91,6 @@ def deleteTicket(request):
     try:
         con = connectDB()
         cursor = con.cursor()
-        print(f"DELETE FROM t_ticket WHERE tnum = '{tnum}';")
         cursor.execute(f"DELETE FROM t_ticket WHERE tnum = '{tnum}';")
         con.commit()
         resp = sendResponse('success',jsons["action"])
@@ -116,6 +125,7 @@ def mainFunction(reqeust):
     if json == False:
         resp = sendResponse('Json болгоход алдаа гарлаа',json)
         return HttpResponse(resp, content_type="application/json")
+    
     else:
         try:
             if json['action'] == 'getTickets':

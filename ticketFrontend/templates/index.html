@@ -117,15 +117,15 @@
   <!-- Shine zaruud button -->
   <div class="m-10">
     <div>
-        <p class="font-bold text-white text-2xl my-8 ">Шинэ зарууд:</p>
+        <p class="font-bold text-white text-2xl my-8 ">Тасалбар:</p>
     </div>
     <div class="ml-5 mb-5">
         {% for zar in data %}
         <a href="{% url 'detail' zar.tnum %}" class="btn zar-button ml-10 mb-10 text-left" >
                   <img class="m-0" src='data:image/jpeg;base64,{{zar.picture}}' />
                   <div class="card-body">
-                    <h2 class="card-title">{{zar.catname}}</h2>
-                    <p>Нэр: {{zar.title}}</p>
+                    <h2 class="card-title">{{zar.title }}</h2>
+                    <p>Төрөл: {{zar.catname}}</p>
                     <p>Хаана: {{zar.location}}</p>
                     <p>Хэзээ: {{zar.date}}</p>
                   </div>
